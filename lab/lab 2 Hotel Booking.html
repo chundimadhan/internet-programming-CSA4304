@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Online Hotel Room Booking System</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f6fa;
+    color: #222;
+}
+
+/* HEADER */
+
+header {
+    background: #263238;
+    color: white;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px 10px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+nav button:hover {
+    background: #455a64;
+    border-radius: 5px;
+}
+
+/* MAIN */
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.section {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+/* HOME */
+
+.hero {
+    background: #607d8b;
+    color: white;
+    padding: 70px 30px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.hero h2 {
+    font-size: 38px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+/* SEARCH */
+
+.search-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 25px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.search-box input,
+.search-box select {
+    width: 22%;
+    padding: 12px;
+    margin: 5px;
+}
+
+/* BUTTON */
+
+.action {
+    background: #37474f;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.action:hover {
+    background: #546e7a;
+}
+
+/* CARDS */
+
+.card-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ccc;
+    flex: 1;
+    min-width: 220px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+/* ROOMS */
+
+.rooms {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.room {
+    background: white;
+    width: 270px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.room .image {
+    height: 150px;
+    background: #90a4ae;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 45px;
+}
+
+.room-content {
+    padding: 20px;
+}
+
+.room-content h3 {
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* FORM */
+
+.form-box {
+    background: white;
+    max-width: 650px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #ccc;
+}
+
+.form-box h2 {
+    margin-bottom: 20px;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 11px;
+    margin: 8px 0 15px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+
+/* TABLE */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background: #37474f;
+    color: white;
+}
+
+/* FOOTER */
+
+footer {
+    margin-top: 50px;
+    background: #263238;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* MOBILE */
+
+@media(max-width: 768px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-box input,
+    .search-box select {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .room {
+        width: 100%;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <h1>🏨 Hotel Booking System</h1>
+
+    <nav>
+
+        <button onclick="showSection('home')">Home</button>
+
+        <button onclick="showSection('rooms')">Rooms</button>
+
+        <button onclick="showSection('booking')">Book Room</button>
+
+        <button onclick="showSection('myBookings')">
+            My Bookings
+        </button>
+
+        <button onclick="showSection('profile')">
+            Profile
+        </button>
+
+        <button onclick="showSection('login')">
+            Login
+        </button>
+
+        <button onclick="showSection('register')">
+            Register
+        </button>
+
+        <button onclick="showSection('admin')">
+            Admin
+        </button>
+
+        <button onclick="showSection('contact')">
+            Contact
+        </button>
+
+    </nav>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- HOME -->
+
+<section id="home" class="section active">
+
+    <div class="hero">
+
+        <h2>Welcome to Our Hotel</h2>
+
+        <p>
+            Find and book your perfect room easily.
+        </p>
+
+        <button class="action"
+                onclick="showSection('rooms')">
+
+            View Rooms
+
+        </button>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <h2>🔍 Search Hotel Rooms</h2>
+
+        <br>
+
+        <input
+            type="text"
+            id="destination"
+            placeholder="Destination">
+
+        <input
+            type="date"
+            id="checkin">
+
+        <input
+            type="date"
+            id="checkout">
+
+        <select id="guests">
+
+            <option value="">Guests</option>
+
+            <option>1 Guest</option>
+
+            <option>2 Guests</option>
+
+            <option>3 Guests</option>
+
+            <option>4 Guests</option>
+
+        </select>
+
+        <button
+            class="action"
+            onclick="searchRooms()">
+
+            Search
+
+        </button>
+
+    </div>
+
+
+    <div class="card-container">
+
+        <div class="card">
+
+            <h3>🛏️ Comfortable Rooms</h3>
+
+            <p>
+                Choose from single, double, deluxe and suite rooms.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>💳 Easy Booking</h3>
+
+            <p>
+                Book your room quickly using our online system.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>📅 Flexible Booking</h3>
+
+            <p>
+                View and manage your booking history.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>⭐ Customer Reviews</h3>
+
+            <p>
+                View hotel and room reviews.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ROOMS -->
+
+<section id="rooms" class="section">
+
+    <h2>🛏️ Available Rooms</h2>
+
+
+    <div class="rooms">
+
+
+        <!-- SINGLE -->
+
+        <div class="room">
+
+            <div class="image">
+                🛏️
+            </div>
+
+            <div class="room-content">
+
+                <h3>Single Room</h3>
+
+                <p>
+                    Suitable for one person.
+                </p>
+
+                <p>
+                    Free Wi-Fi | TV | Breakfast
+                </p>
+
+                <div class="price">
+                    ₹2,000 / night
+                </div>
+
+                <button
+                    class="action"
+                    onclick="selectRoom('Single Room',2000)">
+
+                    Book Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DOUBLE -->
+
+        <div class="room">
+
+            <div class="image">
+                🛏️
+            </div>
+
+            <div class="room-content">
+
+                <h3>Double Room</h3>
+
+                <p>
+                    Comfortable room for two people.
+                </p>
+
+                <p>
+                    Free Wi-Fi | TV | Breakfast
+                </p>
+
+                <div class="price">
+                    ₹3,500 / night
+                </div>
+
+                <button
+                    class="action"
+                    onclick="selectRoom('Double Room',3500)">
+
+                    Book Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DELUXE -->
+
+        <div class="room">
+
+            <div class="image">
+                🏨
+            </div>
+
+            <div class="room-content">
+
+                <h3>Deluxe Room</h3>
+
+                <p>
+                    Spacious premium room.
+                </p>
+
+                <p>
+                    Wi-Fi | TV | Breakfast | AC
+                </p>
+
+                <div class="price">
+                    ₹5,000 / night
+                </div>
+
+                <button
+                    class="action"
+                    onclick="selectRoom('Deluxe Room',5000)">
+
+                    Book Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SUITE -->
+
+        <div class="room">
+
+            <div class="image">
+                🏰
+            </div>
+
+            <div class="room-content">
+
+                <h3>Suite Room</h3>
+
+                <p>
+                    Luxury room with premium facilities.
+                </p>
+
+                <p>
+                    Wi-Fi | TV | AC | Breakfast
+                </p>
+
+                <div class="price">
+                    ₹7,500 / night
+                </div>
+
+                <button
+                    class="action"
+                    onclick="selectRoom('Suite Room',7500)">
+
+                    Book Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- BOOKING -->
+
+<section id="booking" class="section">
+
+    <div class="form-box">
+
+        <h2>📝 Book Your Room</h2>
+
+
+        <label>Guest Name</label>
+
+        <input
+            type="text"
+            id="guestName"
+            placeholder="Enter your name">
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            id="guestEmail"
+            placeholder="Enter email">
+
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            id="guestPhone"
+            placeholder="Enter phone number">
+
+
+        <label>Room Type</label>
+
+        <select id="roomType">
+
+            <option value="">
+                Select Room
+            </option>
+
+            <option value="Single Room">
+                Single Room - ₹2,000
+            </option>
+
+            <option value="Double Room">
+                Double Room - ₹3,500
+            </option>
+
+            <option value="Deluxe Room">
+                Deluxe Room - ₹5,000
+            </option>
+
+            <option value="Suite Room">
+                Suite Room - ₹7,500
+            </option>
+
+        </select>
+
+
+        <label>Check-in Date</label>
+
+        <input
+            type="date"
+            id="bookCheckin">
+
+
+        <label>Check-out Date</label>
+
+        <input
+            type="date"
+            id="bookCheckout">
+
+
+        <label>Number of Guests</label>
+
+        <select id="bookGuests">
+
+            <option>1</option>
+
+            <option>2</option>
+
+            <option>3</option>
+
+            <option>4</option>
+
+        </select>
+
+
+        <label>Payment Method</label>
+
+        <select id="payment">
+
+            <option>Credit Card</option>
+
+            <option>Debit Card</option>
+
+            <option>UPI</option>
+
+            <option>Cash</option>
+
+        </select>
+
+
+        <br><br>
+
+
+        <button
+            class="action"
+            onclick="bookRoom()">
+
+            Confirm Booking
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- MY BOOKINGS -->
+
+<section id="myBookings" class="section">
+
+    <h2>📅 My Bookings</h2>
+
+
+    <table id="bookingTable">
+
+        <tr>
+
+            <th>Guest</th>
+
+            <th>Room</th>
+
+            <th>Check-in</th>
+
+            <th>Check-out</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+        </tr>
+
+
+        <tr>
+
+            <td>Demo User</td>
+
+            <td>Deluxe Room</td>
+
+            <td>10-10-2026</td>
+
+            <td>12-10-2026</td>
+
+            <td>Confirmed</td>
+
+            <td>
+
+                <button
+                    class="action"
+                    onclick="modifyBooking()">
+
+                    Modify
+
+                </button>
+
+                <button
+                    class="action"
+                    onclick="cancelBooking(this)">
+
+                    Cancel
+
+                </button>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</section>
+
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="section">
+
+    <div class="form-box">
+
+        <h2>👤 My Profile</h2>
+
+
+        <label>Full Name</label>
+
+        <input
+            type="text"
+            value="Demo User">
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            value="demo@gmail.com">
+
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            value="9876543210">
+
+
+        <label>Address</label>
+
+        <textarea rows="4">
+India
+        </textarea>
+
+
+        <button
+            class="action"
+            onclick="updateProfile()">
+
+            Update Profile
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- LOGIN -->
+
+<section id="login" class="section">
+
+    <div class="form-box">
+
+        <h2>🔐 Login</h2>
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Enter email">
+
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Enter password">
+
+
+        <button
+            class="action"
+            onclick="login()">
+
+            Login
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- REGISTER -->
+
+<section id="register" class="section">
+
+    <div class="form-box">
+
+        <h2>📝 Create Account</h2>
+
+
+        <label>Full Name</label>
+
+        <input
+            type="text"
+            id="regName"
+            placeholder="Enter full name">
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            id="regEmail"
+            placeholder="Enter email">
+
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            id="regPhone"
+            placeholder="Enter phone">
+
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="regPassword"
+            placeholder="Create password">
+
+
+        <button
+            class="action"
+            onclick="register()">
+
+            Register
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ADMIN -->
+
+<section id="admin" class="section">
+
+    <h2>👨‍💼 Admin Dashboard</h2>
+
+
+    <div class="card-container">
+
+        <div class="card">
+
+            <h3>Total Rooms</h3>
+
+            <p>50</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Available Rooms</h3>
+
+            <p>35</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Total Bookings</h3>
+
+            <p>120</p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>Users</h3>
+
+            <p>200</p>
+
+        </div>
+
+    </div>
+
+
+    <h3 style="margin-top:30px;">
+        Manage Rooms
+    </h3>
+
+
+    <table>
+
+        <tr>
+
+            <th>Room Type</th>
+
+            <th>Quantity</th>
+
+            <th>Price</th>
+
+            <th>Action</th>
+
+        </tr>
+
+
+        <tr>
+
+            <td>Single Room</td>
+
+            <td>15</td>
+
+            <td>₹2,000</td>
+
+            <td>
+
+                <button
+                    class="action"
+                    onclick="editRoom()">
+
+                    Edit
+
+                </button>
+
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>Double Room</td>
+
+            <td>15</td>
+
+            <td>₹3,500</td>
+
+            <td>
+
+                <button
+                    class="action"
+                    onclick="editRoom()">
+
+                    Edit
+
+                </button>
+
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>Deluxe Room</td>
+
+            <td>10</td>
+
+            <td>₹5,000</td>
+
+            <td>
+
+                <button
+                    class="action"
+                    onclick="editRoom()">
+
+                    Edit
+
+                </button>
+
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td>Suite Room</td>
+
+            <td>10</td>
+
+            <td>₹7,500</td>
+
+            <td>
+
+                <button
+                    class="action"
+                    onclick="editRoom()">
+
+                    Edit
+
+                </button>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</section>
+
+
+
+<!-- FAQ -->
+
+<section id="faq" class="section">
+
+    <div class="form-box">
+
+        <h2>❓ Frequently Asked Questions</h2>
+
+        <br>
+
+        <h3>How can I book a room?</h3>
+
+        <p>
+            Select a room, enter your details and confirm the booking.
+        </p>
+
+        <br>
+
+        <h3>Can I cancel my booking?</h3>
+
+        <p>
+            Yes. Bookings can be cancelled according to hotel policy.
+        </p>
+
+        <br>
+
+        <h3>Can I modify my booking?</h3>
+
+        <p>
+            Yes. You can modify the booking before the allowed cancellation period.
+        </p>
+
+        <br>
+
+        <h3>What payment methods are supported?</h3>
+
+        <p>
+            Credit Card, Debit Card, UPI and Cash.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- TRAVEL GUIDE -->
+
+<section id="travel" class="section">
+
+    <div class="form-box">
+
+        <h2>🗺️ Local Travel Guide</h2>
+
+        <br>
+
+        <h3>Tourist Places</h3>
+
+        <p>
+            Visit nearby tourist attractions, restaurants,
+            shopping areas and transportation facilities.
+        </p>
+
+        <br>
+
+        <h3>Transportation</h3>
+
+        <p>
+            Taxi, bus, train and airport transportation
+            are available near the hotel.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- CONTACT -->
+
+<section id="contact" class="section">
+
+    <div class="form-box">
+
+        <h2>📞 Contact Us</h2>
+
+
+        <label>Name</label>
+
+        <input
+            type="text"
+            id="contactName"
+            placeholder="Your name">
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            id="contactEmail"
+            placeholder="Your email">
+
+
+        <label>Message</label>
+
+        <textarea
+            id="contactMessage"
+            rows="5"
+            placeholder="Your message"></textarea>
+
+
+        <button
+            class="action"
+            onclick="sendMessage()">
+
+            Send Message
+
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- PRIVACY -->
+
+<section id="privacy" class="section">
+
+    <div class="form-box">
+
+        <h2>🔒 Privacy Policy</h2>
+
+        <p>
+            We collect basic user information required
+            for hotel booking and account management.
+        </p>
+
+        <br>
+
+        <p>
+            User information should be protected and
+            should not be shared without permission.
+        </p>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 Online Hotel Room Booking System
+    </p>
+
+</footer>
+
+
+
+<script>
+
+
+/* SHOW SECTION */
+
+function showSection(id) {
+
+    let sections =
+        document.querySelectorAll(".section");
+
+    sections.forEach(function(section) {
+
+        section.classList.remove("active");
+
+    });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo(0,0);
+}
+
+
+
+/* SEARCH ROOMS */
+
+function searchRooms() {
+
+    let destination =
+        document.getElementById("destination").value;
+
+    let checkin =
+        document.getElementById("checkin").value;
+
+    let checkout =
+        document.getElementById("checkout").value;
+
+    let guests =
+        document.getElementById("guests").value;
+
+
+    if(destination === "" ||
+       checkin === "" ||
+       checkout === "" ||
+       guests === "") {
+
+        alert("Please enter all search details.");
+
+        return;
+    }
+
+
+    alert(
+        "Searching rooms in " +
+        destination
+    );
+
+    showSection("rooms");
+}
+
+
+
+/* SELECT ROOM */
+
+function selectRoom(room, price) {
+
+    document.getElementById("roomType").value = room;
+
+    showSection("booking");
+
+}
+
+
+
+/* BOOK ROOM */
+
+function bookRoom() {
+
+    let name =
+        document.getElementById("guestName").value;
+
+    let email =
+        document.getElementById("guestEmail").value;
+
+    let phone =
+        document.getElementById("guestPhone").value;
+
+    let room =
+        document.getElementById("roomType").value;
+
+    let checkin =
+        document.getElementById("bookCheckin").value;
+
+    let checkout =
+        document.getElementById("bookCheckout").value;
+
+
+    if(name === "" ||
+       email === "" ||
+       phone === "" ||
+       room === "" ||
+       checkin === "" ||
+       checkout === "") {
+
+        alert("Please fill all booking details.");
+
+        return;
+    }
+
+
+    alert(
+        "Booking confirmed successfully!\n\n" +
+        "Guest: " + name +
+        "\nRoom: " + room +
+        "\nCheck-in: " + checkin +
+        "\nCheck-out: " + checkout
+    );
+
+
+    showSection("myBookings");
+
+}
+
+
+
+/* LOGIN */
+
+function login() {
+
+    let email =
+        document.getElementById("loginEmail").value;
+
+    let password =
+        document.getElementById("loginPassword").value;
+
+
+    if(email === "" || password === "") {
+
+        alert("Please enter email and password.");
+
+        return;
+    }
+
+
+    alert("Login successful!");
+
+    showSection("home");
+
+}
+
+
+
+/* REGISTER */
+
+function register() {
+
+    let name =
+        document.getElementById("regName").value;
+
+    let email =
+        document.getElementById("regEmail").value;
+
+    let phone =
+        document.getElementById("regPhone").value;
+
+    let password =
+        document.getElementById("regPassword").value;
+
+
+    if(name === "" ||
+       email === "" ||
+       phone === "" ||
+       password === "") {
+
+        alert("Please fill all fields.");
+
+        return;
+    }
+
+
+    alert("Registration successful!");
+
+    showSection("login");
+
+}
+
+
+
+/* MODIFY BOOKING */
+
+function modifyBooking() {
+
+    alert(
+        "Booking modification page opened.\n" +
+        "You can change the booking details."
+    );
+
+}
+
+
+
+/* CANCEL BOOKING */
+
+function cancelBooking(button) {
+
+    let confirmCancel =
+        confirm("Are you sure you want to cancel?");
+
+
+    if(confirmCancel) {
+
+        button
+            .parentElement
+            .parentElement
+            .remove();
+
+        alert("Booking cancelled successfully.");
+
+    }
+
+}
+
+
+
+/* PROFILE */
+
+function updateProfile() {
+
+    alert("Profile updated successfully!");
+
+}
+
+
+
+/* ADMIN */
+
+function editRoom() {
+
+    let price =
+        prompt("Enter new room price:");
+
+    if(price) {
+
+        alert(
+            "Room price updated to ₹" +
+            price
+        );
+
+    }
+
+}
+
+
+
+/* CONTACT */
+
+function sendMessage() {
+
+    let name =
+        document.getElementById("contactName").value;
+
+    let email =
+        document.getElementById("contactEmail").value;
+
+    let message =
+        document.getElementById("contactMessage").value;
+
+
+    if(name === "" ||
+       email === "" ||
+       message === "") {
+
+        alert("Please fill all fields.");
+
+        return;
+    }
+
+
+    alert(
+        "Your message has been sent successfully!"
+    );
+
+}
+
+</script>
+
+</body>
+</html>
